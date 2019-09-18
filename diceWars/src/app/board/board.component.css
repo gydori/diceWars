@@ -1,0 +1,13 @@
+table,
+tr,
+td {
+  border: 1px solid black;
+}
+
+.purple {
+  background-color: purple;
+}
+
+button {
+  background-color: green;
+}
