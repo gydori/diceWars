@@ -16,4 +16,10 @@ public class BoardResource {
     public Field[] initializeBoard() {
         return boardService.initializeBoard();
     }
+
+    @GetMapping("/board/refresh")
+    public Field[] getBoard() {
+        return boardService.getBoard();
+    }
+
 }

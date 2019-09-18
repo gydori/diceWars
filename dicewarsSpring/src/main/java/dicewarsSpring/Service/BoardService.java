@@ -19,11 +19,6 @@ public class BoardService {
     @Autowired
     public Board board;
 
-    //tábla mérete
-    public int getSize() {
-        return board.getSize();
-    }
-
     //lila mezők kisorsolása
     public List<Integer> getPurpleFields() {
         for (int i = 0; i < (int) Math.pow(board.getSize(), 2) / 2; i++) {
@@ -100,6 +95,19 @@ public class BoardService {
                 id++;
             }
         }
+        Field[] convertedBoard = new Field[(int) Math.pow(board.getSize(), 2)];
+        int pointer = 0;
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                convertedBoard[pointer] = board.getBoard()[i][j];
+                pointer++;
+            }
+        }
+        return convertedBoard;
+    }
+
+    //pálya jelenlegi állásának visszaadása
+    public Field[] getBoard() {
         Field[] convertedBoard = new Field[(int) Math.pow(board.getSize(), 2)];
         int pointer = 0;
         for (int i = 0; i < board.getSize(); i++) {
