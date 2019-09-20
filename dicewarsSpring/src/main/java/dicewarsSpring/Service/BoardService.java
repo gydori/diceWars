@@ -65,11 +65,13 @@ public class BoardService {
         }
         while (numberOfDices > 0) {
             Integer r = new Random().nextInt(myFields.size());
-            diceOfField.put(myFields.get(r), diceOfField.get(myFields.get(r)) + 1);
-            numberOfDices--;
-            if (diceOfField.get(myFields.get(r)) == 8) {
-                myFields.remove(r);
+            if (diceOfField.get(myFields.get(r)) < 8) {
+                diceOfField.put(myFields.get(r), diceOfField.get(myFields.get(r)) + 1);
+                numberOfDices--;
             }
+/*            if (diceOfField.get(myFields.get(r)) == 8) {
+                myFields.remove(r);
+            }*/
         }
         return diceOfField;
     }

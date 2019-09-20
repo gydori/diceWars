@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Field } from "./field.model";
 
 @Injectable({
@@ -18,5 +18,12 @@ export class BoardService {
 
   getBoard() {
     return this.httpClient.get("http://localhost:8081/getboard");
+  }
+
+  endTurn(whosTurn: boolean) {
+    return this.httpClient.post(
+      "http://localhost:8081/endgame",
+      String(whosTurn)
+    );
   }
 }

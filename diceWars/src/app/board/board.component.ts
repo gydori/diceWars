@@ -14,24 +14,16 @@ export class BoardComponent implements OnInit {
   size: number[] = [];
   war: Field[] = [];
   invader: Field;
+  whosTurn: boolean = true;
+  invaderPoints: number;
+  enemyPoints: number;
 
   ngOnInit() {
     this.boardService.initBoard().subscribe((data: []) => {
-      this.board = [];
-      let k = 0;
-      for (let i: number = 0; i < Math.sqrt(data.length); i++) {
-        this.board[i] = [];
-        for (let j: number = 0; j < Math.sqrt(data.length); j++) {
-          this.board[i][j] = data[k];
-          k++;
-        }
-      }
-
+      this.convertBoard(data);
       for (let i = 0; i < Math.sqrt(data.length); i++) {
         this.size[i] = i;
       }
-
-      console.log(this.board);
     });
   }
 
@@ -42,30 +34,22 @@ export class BoardComponent implements OnInit {
     } else {
       this.war.push(f);
       console.log(this.war);
-      this.boardService.attack(this.war).subscribe(() => {
-        this.boardService.getBoard().subscribe((data: []) => {
-          this.board = [];
-          let k = 0;
-          for (let i: number = 0; i < Math.sqrt(data.length); i++) {
-            this.board[i] = [];
-            for (let j: number = 0; j < Math.sqrt(data.length); j++) {
-              this.board[i][j] = data[k];
-              k++;
-            }
-          }
-          this.war = [];
-          this.invader = undefined;
-          console.log(this.war);
-        });
+      this.boardService.attack(this.war).subscribe((data: number[]) => {
+        this.invaderPoints = data[0];
+        this.enemyPoints = data[1];
+        this.getBoard();
+        this.war = [];
+        this.invader = undefined;
+        console.log(this.war);
       });
     }
   }
 
   attackable(f: Field) {
-    if (this.invader == undefined) {
+    if (this.whosTurn == f.owner && this.invader == undefined) {
       return false;
     } else {
-      if (f.owner == !this.invader.owner) {
+      if (this.invader != undefined && f.owner == !this.invader.owner) {
         if (
           (Math.abs(f.row - this.invader.row) == 1 &&
             Math.abs(f.col - this.invader.col) == 0) ||
@@ -78,6 +62,32 @@ export class BoardComponent implements OnInit {
         }
       } else {
         return true;
+      }
+    }
+  }
+
+  endTurn() {
+    console.log(this.whosTurn);
+    this.boardService.endTurn(this.whosTurn).subscribe(() => {
+      this.whosTurn = !this.whosTurn;
+      this.getBoard();
+    });
+  }
+
+  getBoard() {
+    this.boardService.getBoard().subscribe((data: []) => {
+      this.convertBoard(data);
+    });
+  }
+
+  convertBoard(data: []) {
+    this.board = [];
+    let k = 0;
+    for (let i: number = 0; i < Math.sqrt(data.length); i++) {
+      this.board[i] = [];
+      for (let j: number = 0; j < Math.sqrt(data.length); j++) {
+        this.board[i][j] = data[k];
+        k++;
       }
     }
   }
