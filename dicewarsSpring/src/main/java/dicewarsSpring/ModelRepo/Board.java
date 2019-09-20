@@ -15,6 +15,17 @@ public class Board implements Player {
         this.board = new Field[size][size];
     }
 
+    public Field getField(int id) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (board[i][j].getId() == id) {
+                    return board[i][j];
+                }
+            }
+        }
+        return null;
+    }
+
     public int getSize() {
         return size;
     }

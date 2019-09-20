@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static dicewarsSpring.ModelRepo.Player.greenFields;
-import static dicewarsSpring.ModelRepo.Player.purpleFields;
-
 @RestController
 public class GameResource {
 
@@ -33,9 +30,9 @@ public class GameResource {
     @PostMapping("/endturn")
     public void endGame(@RequestBody String who) {
         if (who.equals("true")) {
-            gameService.endOfTurn(purpleFields);
+            gameService.endOfTurn(true);
         } else {
-            gameService.endOfTurn(greenFields);
+            gameService.endOfTurn(false);
         }
     }
 

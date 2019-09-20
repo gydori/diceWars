@@ -5,34 +5,34 @@ public class Field {
     private final int id;
     private int row;
     private int col;
-    private boolean owner;
-    private int diceNumber;
+    private Boolean owner;
+    private Integer diceNumber;
 
-    public Field(int row, int col, int id, boolean owner, int diceNumber) {
+    public Field(int row, int col, int id) {
         this.row = row;
         this.col = col;
         this.id = id;
-        this.owner = owner;
-        this.diceNumber = diceNumber;
+        this.owner = null;
+        this.diceNumber = null;
     }
 
     public int getId() {
         return id;
     }
 
-    public boolean getOwner() {
+    public Boolean getOwner() {
         return owner;
     }
 
-    public void setOwner(boolean owner) {
+    public void setOwner(Boolean owner) {
         this.owner = owner;
     }
 
-    public int getDiceNumber() {
+    public Integer getDiceNumber() {
         return diceNumber;
     }
 
-    public void setDiceNumber(int diceNumber) {
+    public void setDiceNumber(Integer diceNumber) {
         this.diceNumber = diceNumber;
     }
 
