@@ -22,7 +22,7 @@ export class BoardService {
 
   endTurn(whosTurn: boolean) {
     return this.httpClient.post(
-      "http://localhost:8081/endgame",
+      "http://localhost:8081/endturn",
       String(whosTurn)
     );
   }

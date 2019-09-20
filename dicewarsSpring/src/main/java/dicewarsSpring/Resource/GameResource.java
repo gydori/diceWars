@@ -30,7 +30,7 @@ public class GameResource {
     }
 
 
-    @PostMapping("/endgame")
+    @PostMapping("/endturn")
     public void endGame(@RequestBody String who) {
         if (who.equals("true")) {
             gameService.endOfTurn(purpleFields);

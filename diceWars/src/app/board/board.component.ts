@@ -32,17 +32,21 @@ export class BoardComponent implements OnInit {
       this.invader = f;
       this.war.push(f);
     } else {
-      this.war.push(f);
-      console.log(this.war);
-      this.boardService.attack(this.war).subscribe((data: number[]) => {
-        this.invaderPoints = data[0];
-        this.enemyPoints = data[1];
-        this.getBoard();
+      if (this.invader != undefined && this.war[0] == f) {
         this.war = [];
         this.invader = undefined;
-        console.log(this.war);
-      });
+      } else {
+        this.war.push(f);
+        this.boardService.attack(this.war).subscribe((data: number[]) => {
+          this.invaderPoints = data[0];
+          this.enemyPoints = data[1];
+          this.getBoard();
+          this.war = [];
+          this.invader = undefined;
+        });
+      }
     }
+    console.log(this.war);
   }
 
   attackable(f: Field) {
@@ -60,6 +64,8 @@ export class BoardComponent implements OnInit {
         } else {
           return true;
         }
+      } else if (this.invader != undefined && this.invader == f) {
+        return false;
       } else {
         return true;
       }
