@@ -8,10 +8,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { FieldComponent } from "./field/field.component";
 import { BoardService } from "./board.service";
 import { HttpClientModule } from "@angular/common/http";
+import { RobotComponent } from "./robot/robot.component";
 
 const myRoutes: Routes = [
   { path: "", component: StartPageComponent },
-  { path: "game", component: BoardComponent }
+  { path: "game", component: BoardComponent },
+  { path: "gameRobot", component: RobotComponent }
 ];
 
 @NgModule({
@@ -19,7 +21,8 @@ const myRoutes: Routes = [
     AppComponent,
     StartPageComponent,
     BoardComponent,
-    FieldComponent
+    FieldComponent,
+    RobotComponent
   ],
   imports: [BrowserModule, RouterModule.forRoot(myRoutes), HttpClientModule],
   providers: [BoardService],

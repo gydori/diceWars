@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -34,13 +35,6 @@ public class GameService {
             enemy.setOwner(!enemy.getOwner());
             enemy.setDiceNumber(me.getDiceNumber() - 1);
             me.setDiceNumber(1);
-/*            if (me.getOwner()) {
-                purpleFields.add(enemy.getId());
-                greenFields.remove(greenFields.indexOf(enemy.getId()));
-            } else {
-                greenFields.add(enemy.getId());
-                purpleFields.remove(purpleFields.indexOf(enemy.getId()));
-            }*/
         }
         if (myPoints <= enemyPoints) {
             me.setDiceNumber(1);
@@ -49,30 +43,19 @@ public class GameService {
     }
 
     public void endOfTurn(Boolean owner) {
-        /*for (int i = 0; i < board.getSize(); i++) {
-            for (int j = 0; j < board.getSize(); j++) {
-                if (myFields.contains(board.getBoard()[i][j].getId()) && board.getBoard()[i][j].getDiceNumber() == 8) {
-                    myFields.remove(myFields.indexOf(board.getBoard()[i][j].getId()));
-                }
-            }
-        }*/
         List<Field> myFields = boardService.getOwnFields(owner);
+
         int numberOfDices = myFields.size() / 2;
 
         while (numberOfDices > 0) {
-            Integer r = new Random().nextInt(myFields.size());
-            //int id = myFields.get(r);
-            //for (int i = 0; i < board.getSize(); i++) {
-            //for (int j = 0; j < board.getSize(); j++) {
-            if (myFields.get(r).getDiceNumber() < 8) {
+            myFields = myFields.stream().filter(f -> f.getDiceNumber() < 8).collect(Collectors.toList());
+            if (myFields.size() < 1) {
+                break;
+            } else {
+                Integer r = new Random().nextInt(myFields.size());
                 myFields.get(r).setDiceNumber(myFields.get(r).getDiceNumber() + 1);
-/*                        if (board.getBoard()[i][j].getDiceNumber() == 8) {
-                            myFields.remove(myFields.indexOf(board.getBoard()[i][j].getId()));
-                        }*/
                 numberOfDices--;
             }
-            //}
-            // }
         }
     }
 

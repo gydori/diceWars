@@ -1,13 +1,17 @@
 package dicewarsSpring.Resource;
 
+import dicewarsSpring.ModelRepo.Attack;
 import dicewarsSpring.ModelRepo.Board;
 import dicewarsSpring.ModelRepo.Field;
 import dicewarsSpring.Service.BoardService;
 import dicewarsSpring.Service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class GameResource {
@@ -17,6 +21,9 @@ public class GameResource {
 
     @Autowired
     public BoardService boardService;
+
+    @Autowired
+    public RobotService robotService;
 
     @Autowired
     public Board board;
@@ -36,4 +43,8 @@ public class GameResource {
         }
     }
 
+    @GetMapping("/robot")
+    public List<Attack> robotAttack() {
+        return robotService.choose();
+    }
 }

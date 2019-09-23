@@ -34,30 +34,6 @@ public class BoardService {
         }
     }
 
-    //zöld mezők (a maradék)
-    /*public List<Integer> getGreenFields() {
-        for (int i = 0; i < Math.pow(board.getSize(), 2); i++) {
-            if (!purpleFields.contains(i)) {
-                greenFields.add(i);
-            }
-        }
-        return greenFields;
-    }*/
-
-    //mezők Map-be gyűjtése <id, owner>
-    /*public Map<Integer, Boolean> whoOwnsTheFields() {
-        List<Integer> purple = getPurpleFields();
-        List<Integer> green = getGreenFields();
-        Map<Integer, Boolean> fields = new HashMap<>();
-        for (int i = 0; i < purple.size(); i++) {
-            fields.put(purple.get(i), true);
-        }
-        for (int i = 0; i < green.size(); i++) {
-            fields.put(green.get(i), false);
-        }
-        return fields;
-    }*/
-
     public List<Field> getOwnFields(Boolean owner) {
         List<Field> myFields = new ArrayList<>();
         for (int i = 0; i < board.getSize(); i++) {
@@ -74,7 +50,6 @@ public class BoardService {
     public void partiateDices(Boolean owner) {
         List<Field> myFields = getOwnFields(owner);
         int numberOfDices = myFields.size() * 3;
-        //Map<Integer, Integer> diceOfField = new HashMap<>();
         for (int i = 0; i < myFields.size(); i++) {
             myFields.get(i).setDiceNumber(1);
             numberOfDices--;
@@ -85,27 +60,12 @@ public class BoardService {
                 myFields.get(r).setDiceNumber(myFields.get(r).getDiceNumber() + 1);
                 numberOfDices--;
             }
-/*            if (diceOfField.get(myFields.get(r)) == 8) {
-                myFields.remove(r);
-            }*/
         }
     }
-
-    //Kockák Map-be gyűjtése <id, diceNumber>
-/*    public Map<Integer, Integer> getPartiateDices() {
-        Map<Integer, Integer> diceOfPurpleField = partiateDices(purpleFields.size() * 3, purpleFields);
-        Map<Integer, Integer> diceOfGreenField = partiateDices(greenFields.size() * 3, greenFields);
-        Map<Integer, Integer> diceOfField = new HashMap<>();
-        diceOfField.putAll(diceOfPurpleField);
-        diceOfField.putAll(diceOfGreenField);
-        return diceOfField;
-    }*/
 
     //tábla inicializálása
     public Field[] initializeBoard() {
         int id = 0;
-        //Map<Integer, Boolean> owner = whoOwnsTheFields();
-        //Map<Integer, Integer> dice = getPartiateDices();
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
                 board.getBoard()[i][j] = new Field(i, j, id);

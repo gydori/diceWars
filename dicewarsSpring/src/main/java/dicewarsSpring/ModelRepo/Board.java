@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class Board implements Player {
+public class Board {
 
     private int size;
     private Field[][] board;
