@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { BoardService } from "../board.service";
 import { Field } from "../field.model";
 import { Attack } from "../attack.model";
-import { SourceListMap } from "source-list-map";
 
 @Component({
   selector: "app-robot",
@@ -12,13 +11,15 @@ import { SourceListMap } from "source-list-map";
 export class RobotComponent implements OnInit {
   constructor(private boardService: BoardService) {}
 
-  board: Field[][];
-  size: number[] = [];
-  war: Field[] = [];
-  invader: Field;
-  whosTurn: boolean = true;
-  invaderPoints: number;
-  enemyPoints: number;
+  public board: Field[][];
+  public size: number[] = [];
+  public war: Field[] = [];
+  public invader: Field;
+  public whosTurn: boolean = true;
+  public invaderPoints: number;
+  public enemyPoints: number;
+  public count: number = 0;
+  public robotAttackBoards: any[] = new Array();
 
   ngOnInit() {
     this.boardService.initBoard().subscribe((data: []) => {
@@ -84,40 +85,32 @@ export class RobotComponent implements OnInit {
       this.boardService.getBoard().subscribe((data: []) => {
         this.convertBoard(data);
         this.boardService.robotAttack().subscribe((data2: Attack[]) => {
-          this.robotAttack(data2);
-          this.boardService.endTurn(this.whosTurn).subscribe(() => {
-            this.whosTurn = !this.whosTurn;
-            this.getBoard();
-          });
+          this.myLoop(data2, 0);
         });
       });
     });
   }
 
-  /*  myLoop(data2: Attack[]) {
-    setTimeout(function() {
-      this.robotAttack(data2[this.i]);
-      this.i++;
-      if (this.i < data2.length) {
-        this.myLoop();
+  myLoop(data2: Attack[], count: number) {
+    setTimeout(() => {
+      let thisCount = count;
+      this.invader = data2[thisCount].invader;
+      this.invaderPoints = data2[thisCount].invaderPoints;
+      this.enemyPoints = data2[thisCount].invadedPoints;
+      this.convertBoard(data2[thisCount].board);
+      thisCount++;
+      if (thisCount < data2.length) {
+        this.myLoop(data2, thisCount);
+      }
+      if (thisCount == data2.length) {
+        this.boardService.endTurn(this.whosTurn).subscribe(() => {
+          this.whosTurn = !this.whosTurn;
+          this.getBoard();
+          this.war = [];
+          this.invader = undefined;
+        });
       }
     }, 3000);
-  }*/
-
-  robotAttack(data: Attack[]) {
-    for (let i = 0; i < data.length; i++) {
-      this.invader = data[i].invader;
-      this.war = [];
-      this.war.push(this.invader);
-      this.war.push(data[i].invaded);
-      this.boardService.attack(this.war).subscribe((data3: number[]) => {
-        this.invaderPoints = data3[0];
-        this.enemyPoints = data3[1];
-        this.getBoard();
-        this.war = [];
-        this.invader = undefined;
-      });
-    }
   }
 
   getBoard() {
@@ -126,7 +119,7 @@ export class RobotComponent implements OnInit {
     });
   }
 
-  convertBoard(data: []) {
+  convertBoard(data: Field[]) {
     this.board = [];
     let k = 0;
     for (let i: number = 0; i < Math.sqrt(data.length); i++) {

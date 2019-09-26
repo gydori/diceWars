@@ -5,6 +5,7 @@ import dicewarsSpring.ModelRepo.Board;
 import dicewarsSpring.ModelRepo.Field;
 import dicewarsSpring.Service.BoardService;
 import dicewarsSpring.Service.GameService;
+import dicewarsSpring.Service.RobotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,6 @@ public class GameResource {
 
     @GetMapping("/robot")
     public List<Attack> robotAttack() {
-        return robotService.choose();
+        return robotService.robotAttacks();
     }
 }

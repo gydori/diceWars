@@ -2,11 +2,14 @@ package dicewarsSpring.ModelRepo;
 
 public class Field {
 
-    private final int id;
+    private int id;
     private int row;
     private int col;
     private Boolean owner;
     private Integer diceNumber;
+
+    public Field() {
+    }
 
     public Field(int row, int col, int id) {
         this.row = row;
@@ -14,6 +17,14 @@ public class Field {
         this.id = id;
         this.owner = null;
         this.diceNumber = null;
+    }
+
+    public Field(int row, int col, int id, boolean owner, Integer dNum) {
+        this.row = row;
+        this.col = col;
+        this.id = id;
+        this.owner = owner;
+        this.diceNumber = dNum;
     }
 
     public int getId() {
@@ -51,4 +62,5 @@ public class Field {
     public void setCol(int col) {
         this.col = col;
     }
+
 }
