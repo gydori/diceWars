@@ -1,19 +1,25 @@
 package dicewarsSpring.Service;
 
-import dicewarsSpring.ModelRepo.Board;
-import dicewarsSpring.ModelRepo.Field;
+import dicewarsSpring.Model.Board;
+import dicewarsSpring.Model.Field;
+import dicewarsSpring.Repository.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @Service
+@Transactional
 public class BoardService {
 
     @Autowired
     public Board board;
+
+    @Autowired
+    FieldRepository fieldRepo;
 
     //mezők kisorsolása
     public void partiateFields() {
@@ -90,6 +96,16 @@ public class BoardService {
             }
         }
         return convertedBoard;
+    }
+
+    public void saveBoard() {
+        for (int i = 0; i < Math.pow(board.getSize(), 2); i++) {
+            fieldRepo.save(board.getField(i));
+        }
+    }
+
+    public void clearDB() {
+        fieldRepo.deleteAll();
     }
 
 }

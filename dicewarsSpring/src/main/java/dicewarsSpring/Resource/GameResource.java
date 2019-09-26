@@ -1,8 +1,8 @@
 package dicewarsSpring.Resource;
 
-import dicewarsSpring.ModelRepo.Attack;
-import dicewarsSpring.ModelRepo.Board;
-import dicewarsSpring.ModelRepo.Field;
+import dicewarsSpring.Model.Attack;
+import dicewarsSpring.Model.Board;
+import dicewarsSpring.Model.Field;
 import dicewarsSpring.Service.BoardService;
 import dicewarsSpring.Service.GameService;
 import dicewarsSpring.Service.RobotService;
@@ -37,11 +37,13 @@ public class GameResource {
 
     @PostMapping("/endturn")
     public void endGame(@RequestBody String who) {
+        boardService.clearDB();
         if (who.equals("true")) {
             gameService.endOfTurn(true);
         } else {
             gameService.endOfTurn(false);
         }
+        boardService.saveBoard();
     }
 
     @GetMapping("/robot")

@@ -15,11 +15,11 @@ export class RobotComponent implements OnInit {
   public size: number[] = [];
   public war: Field[] = [];
   public invader: Field;
+  public invaded: Field;
   public whosTurn: boolean = true;
   public invaderPoints: number;
   public enemyPoints: number;
   public count: number = 0;
-  public robotAttackBoards: any[] = new Array();
 
   ngOnInit() {
     this.boardService.initBoard().subscribe((data: []) => {
@@ -49,7 +49,6 @@ export class RobotComponent implements OnInit {
         });
       }
     }
-    console.log(this.war);
   }
 
   attackable(f: Field) {
@@ -94,10 +93,11 @@ export class RobotComponent implements OnInit {
   myLoop(data2: Attack[], count: number) {
     setTimeout(() => {
       let thisCount = count;
-      this.invader = data2[thisCount].invader;
       this.invaderPoints = data2[thisCount].invaderPoints;
       this.enemyPoints = data2[thisCount].invadedPoints;
       this.convertBoard(data2[thisCount].board);
+      this.invader = data2[thisCount].invader;
+      this.invaded = data2[thisCount].invaded;
       thisCount++;
       if (thisCount < data2.length) {
         this.myLoop(data2, thisCount);
@@ -108,9 +108,10 @@ export class RobotComponent implements OnInit {
           this.getBoard();
           this.war = [];
           this.invader = undefined;
+          this.invaded = undefined;
         });
       }
-    }, 3000);
+    }, 1000);
   }
 
   getBoard() {

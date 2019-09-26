@@ -1,10 +1,10 @@
-package dicewarsSpring.ModelRepo;
+package dicewarsSpring.Model;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Random;
 
-@Component
+@Repository
 public class Board {
 
     private int size;

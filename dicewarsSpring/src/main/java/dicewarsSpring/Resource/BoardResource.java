@@ -1,6 +1,6 @@
 package dicewarsSpring.Resource;
 
-import dicewarsSpring.ModelRepo.Field;
+import dicewarsSpring.Model.Field;
 import dicewarsSpring.Service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

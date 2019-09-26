@@ -1,5 +1,6 @@
-package dicewarsSpring.ModelRepo;
+package dicewarsSpring.Repository;
 
+import dicewarsSpring.Model.Attack;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

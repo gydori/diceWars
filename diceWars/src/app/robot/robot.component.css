@@ -18,6 +18,10 @@ td {
   border: 3px solid red;
 }
 
+.invaded {
+  border: 3px solid red;
+}
+
 button {
   background-color: limegreen;
   border: none;

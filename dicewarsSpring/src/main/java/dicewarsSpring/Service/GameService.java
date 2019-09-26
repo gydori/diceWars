@@ -1,7 +1,7 @@
 package dicewarsSpring.Service;
 
-import dicewarsSpring.ModelRepo.Board;
-import dicewarsSpring.ModelRepo.Field;
+import dicewarsSpring.Model.Board;
+import dicewarsSpring.Model.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

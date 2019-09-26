@@ -1,4 +1,4 @@
-package dicewarsSpring.ModelRepo;
+package dicewarsSpring.Model;
 
 public class Attack {
     private Field invader;

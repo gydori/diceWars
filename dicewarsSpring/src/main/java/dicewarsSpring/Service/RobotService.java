@@ -1,8 +1,8 @@
 package dicewarsSpring.Service;
 
-import dicewarsSpring.ModelRepo.Attack;
-import dicewarsSpring.ModelRepo.AttackRepository;
-import dicewarsSpring.ModelRepo.Board;
+import dicewarsSpring.Model.Attack;
+import dicewarsSpring.Model.Board;
+import dicewarsSpring.Repository.AttackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -81,7 +81,6 @@ public class RobotService {
         if (attack == null) {
             List<Attack> list = List.copyOf(attackRepository.getAttacks());
             attackRepository.deleteAttacks();
-            System.out.println(list);
             return list;
         } else {
             int[] points = gameService.attack(attack.getInvader(), attack.getInvaded());

@@ -2,7 +2,11 @@
   <tr *ngFor="let row of board">
     <td *ngFor="let f of row">
       <button
-        [ngClass]="{ purple: f.owner == true, invader: f == invader }"
+        [ngClass]="{
+          purple: f.owner == true,
+          invader: invader != undefined && f.id == invader.id,
+          invaded: invaded != undefined && f.id == invaded.id
+        }"
         (click)="attack(f)"
         [disabled]="attackable(f)"
       >

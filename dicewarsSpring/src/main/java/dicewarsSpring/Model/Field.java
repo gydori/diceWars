@@ -1,11 +1,28 @@
-package dicewarsSpring.ModelRepo;
+package dicewarsSpring.Model;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Field {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long SqlId;
+
+    @Column
     private int id;
+
+    @Column
     private int row;
+
+    @Column
     private int col;
+
+    @Column
     private Boolean owner;
+
+    @Column
     private Integer diceNumber;
 
     public Field() {
