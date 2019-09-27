@@ -50,4 +50,5 @@ public class GameResource {
     public List<Attack> robotAttack() {
         return robotService.robotAttacks();
     }
+
 }

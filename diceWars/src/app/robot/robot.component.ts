@@ -11,15 +11,15 @@ import { Attack } from "../attack.model";
 export class RobotComponent implements OnInit {
   constructor(private boardService: BoardService) {}
 
-  public board: Field[][];
-  public size: number[] = [];
-  public war: Field[] = [];
-  public invader: Field;
-  public invaded: Field;
-  public whosTurn: boolean = true;
-  public invaderPoints: number;
-  public enemyPoints: number;
-  public count: number = 0;
+  board: Field[][];
+  size: number[] = [];
+  war: Field[] = [];
+  invader: Field;
+  invaded: Field;
+  whosTurn: boolean = true;
+  invaderPoints: number;
+  enemyPoints: number;
+  count: number = 0;
 
   ngOnInit() {
     this.boardService.initBoard().subscribe((data: []) => {
@@ -56,7 +56,11 @@ export class RobotComponent implements OnInit {
       return true;
     } else {
       if (this.whosTurn == f.owner && this.invader == undefined) {
-        return false;
+        if (f.diceNumber == 1) {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         if (this.invader != undefined && f.owner == !this.invader.owner) {
           if (
@@ -93,12 +97,14 @@ export class RobotComponent implements OnInit {
   myLoop(data2: Attack[], count: number) {
     setTimeout(() => {
       let thisCount = count;
-      this.invaderPoints = data2[thisCount].invaderPoints;
-      this.enemyPoints = data2[thisCount].invadedPoints;
-      this.convertBoard(data2[thisCount].board);
-      this.invader = data2[thisCount].invader;
-      this.invaded = data2[thisCount].invaded;
-      thisCount++;
+      if (data2.length != 0) {
+        this.invaderPoints = data2[thisCount].invaderPoints;
+        this.enemyPoints = data2[thisCount].invadedPoints;
+        this.convertBoard(data2[thisCount].board);
+        this.invader = data2[thisCount].invader;
+        this.invaded = data2[thisCount].invaded;
+        thisCount++;
+      }
       if (thisCount < data2.length) {
         this.myLoop(data2, thisCount);
       }
@@ -130,5 +136,11 @@ export class RobotComponent implements OnInit {
         k++;
       }
     }
+  }
+
+  resume() {
+    this.boardService.resume().subscribe((data: Field[]) => {
+      this.convertBoard(data);
+    });
   }
 }

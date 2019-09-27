@@ -37,3 +37,22 @@ button:disabled {
   height: auto;
   font-size: 16px;
 }
+
+.grid-container {
+  display: grid;
+  justify-items: center;
+  background: url("12.jpg");
+  background-size: cover;
+  background-repeat: repeat-y;
+}
+
+.borderimg {
+  border-image-slice: 15 15 15 15 fill;
+  border-image-width: 10px 10px 10px 10px;
+  border-image-outset: 50px 50px 50px 50px;
+  border-image-source: url("https://cdn.pixabay.com/photo/2017/02/08/07/36/board-game-2048027_960_720.png");
+}
+
+.white {
+  background: white;
+}

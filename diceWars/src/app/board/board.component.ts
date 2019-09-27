@@ -46,12 +46,15 @@ export class BoardComponent implements OnInit {
         });
       }
     }
-    console.log(this.war);
   }
 
   attackable(f: Field) {
     if (this.whosTurn == f.owner && this.invader == undefined) {
-      return false;
+      if (f.diceNumber == 1) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       if (this.invader != undefined && f.owner == !this.invader.owner) {
         if (

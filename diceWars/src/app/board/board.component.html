@@ -1,18 +1,25 @@
-<table>
-  <tr *ngFor="let row of board">
-    <td *ngFor="let f of row">
-      <button
-        [ngClass]="{ purple: f.owner == true, invader: f == invader }"
-        (click)="attack(f)"
-        [disabled]="attackable(f)"
-      >
-        <app-field [field]="f"></app-field>
-      </button>
-    </td>
-  </tr>
-</table>
+<div class="grid-container">
+  <div class="grid-item">
+    <div class="borderimg">
+      <table>
+        <tr *ngFor="let row of board">
+          <td *ngFor="let f of row">
+            <button
+              [ngClass]="{ purple: f.owner == true, invader: f == invader }"
+              (click)="attack(f)"
+              [disabled]="attackable(f)"
+            >
+              <app-field [field]="f"></app-field>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="white">
+      <p>Your points: {{ invaderPoints }}</p>
+      <p>Enemy points: {{ enemyPoints }}</p>
 
-<p>Your points: {{ invaderPoints }}</p>
-<p>Enemy points: {{ enemyPoints }}</p>
-
-<button class="end-turn" (click)="endTurn()">End turn</button>
+      <button class="end-turn" (click)="endTurn()">End turn</button>
+    </div>
+  </div>
+</div>

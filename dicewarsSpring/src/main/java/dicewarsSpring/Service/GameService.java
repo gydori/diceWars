@@ -59,4 +59,22 @@ public class GameService {
         }
     }
 
+    public boolean winCheck() {
+        List<Field> enemyFields = boardService.getOwnFields(false);
+        if (enemyFields.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean looseCheck() {
+        List<Field> myFields = boardService.getOwnFields(true);
+        if (myFields.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

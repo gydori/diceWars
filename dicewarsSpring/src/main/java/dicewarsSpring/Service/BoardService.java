@@ -108,4 +108,26 @@ public class BoardService {
         fieldRepo.deleteAll();
     }
 
+    public List<Field> findAllField() {
+        return fieldRepo.findAll();
+    }
+
+    public Field[] convertResumeBoard() {
+        //listből arraybe, hogy küldhető legyen a frontendhez
+        List<Field> listBoard = findAllField();
+        Field[] arrayBoard = new Field[listBoard.size()];
+        arrayBoard = listBoard.toArray(arrayBoard);
+
+        //backendbeli board-ba beletölteni
+        int size = (int) Math.sqrt(arrayBoard.length);
+        int k = 0;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board.getBoard()[i][j] = arrayBoard[k];
+                k++;
+            }
+        }
+        return arrayBoard;
+    }
+
 }

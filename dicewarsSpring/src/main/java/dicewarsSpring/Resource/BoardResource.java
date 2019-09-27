@@ -22,4 +22,8 @@ public class BoardResource {
         return boardService.getBoard();
     }
 
+    @GetMapping("/resume")
+    public Field[] resumeBoard() {
+        return boardService.convertResumeBoard();
+    }
 }
