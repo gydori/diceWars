@@ -14,7 +14,9 @@ import { HttpConfigInterceptor } from "./robot/httpconfig.interceptor";
 const myRoutes: Routes = [
   { path: "", component: StartPageComponent },
   { path: "game", component: BoardComponent },
-  { path: "gameRobot", component: RobotComponent }
+  { path: "gameRobot", component: RobotComponent },
+  { path: "win", component: StartPageComponent },
+  { path: "lost", component: StartPageComponent }
 ];
 
 @NgModule({
