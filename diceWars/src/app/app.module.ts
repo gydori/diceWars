@@ -7,8 +7,9 @@ import { BoardComponent } from "./board/board.component";
 import { RouterModule, Routes } from "@angular/router";
 import { FieldComponent } from "./field/field.component";
 import { BoardService } from "./board.service";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RobotComponent } from "./robot/robot.component";
+import { HttpConfigInterceptor } from "./robot/httpconfig.interceptor";
 
 const myRoutes: Routes = [
   { path: "", component: StartPageComponent },
@@ -25,7 +26,10 @@ const myRoutes: Routes = [
     RobotComponent
   ],
   imports: [BrowserModule, RouterModule.forRoot(myRoutes), HttpClientModule],
-  providers: [BoardService],
+  providers: [
+    BoardService,
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

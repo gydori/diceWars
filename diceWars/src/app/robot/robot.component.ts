@@ -40,13 +40,19 @@ export class RobotComponent implements OnInit {
         this.invader = undefined;
       } else {
         this.war.push(f);
-        this.boardService.attack(this.war).subscribe((data: number[]) => {
-          this.invaderPoints = data[0];
-          this.enemyPoints = data[1];
-          this.getBoard();
-          this.war = [];
-          this.invader = undefined;
-        });
+        this.boardService.attack(this.war).subscribe(
+          (data: number[]) => {
+            this.invaderPoints = data[0];
+            this.enemyPoints = data[1];
+            this.getBoard();
+            this.war = [];
+            this.invader = undefined;
+          },
+          err => {
+            console.log(err);
+            console.log("hiba");
+          }
+        );
       }
     }
   }

@@ -1,9 +1,10 @@
 package dicewarsSpring.Service;
 
-import dicewarsSpring.Model.Board;
 import dicewarsSpring.Model.Field;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Random;
@@ -11,9 +12,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class GameService {
-
-    @Autowired
-    public Board board;
 
     @Autowired
     public BoardService boardService;
@@ -39,6 +37,12 @@ public class GameService {
         if (myPoints <= enemyPoints) {
             me.setDiceNumber(1);
         }
+        if (boardService.winCheck()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You win");
+        }
+        if (boardService.looseCheck()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You lost");
+        }
         return points;
     }
 
@@ -56,24 +60,6 @@ public class GameService {
                 myFields.get(r).setDiceNumber(myFields.get(r).getDiceNumber() + 1);
                 numberOfDices--;
             }
-        }
-    }
-
-    public boolean winCheck() {
-        List<Field> enemyFields = boardService.getOwnFields(false);
-        if (enemyFields.size() == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean looseCheck() {
-        List<Field> myFields = boardService.getOwnFields(true);
-        if (myFields.size() == 0) {
-            return true;
-        } else {
-            return false;
         }
     }
 

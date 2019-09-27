@@ -98,6 +98,24 @@ public class BoardService {
         return convertedBoard;
     }
 
+    public boolean winCheck() {
+        List<Field> enemyFields = getOwnFields(false);
+        if (enemyFields.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean looseCheck() {
+        List<Field> myFields = getOwnFields(true);
+        if (myFields.size() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void saveBoard() {
         for (int i = 0; i < Math.pow(board.getSize(), 2); i++) {
             fieldRepo.save(board.getField(i));
