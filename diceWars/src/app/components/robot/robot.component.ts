@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { BoardService } from "../board.service";
-import { Field } from "../field.model";
-import { Attack } from "../attack.model";
+import { BoardService } from "../../board.service";
+import { Field } from "../../models/field.model";
+import { Attack } from "../../models/attack.model";
 
 @Component({
   selector: "app-robot",

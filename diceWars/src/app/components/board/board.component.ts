@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { BoardService } from "../board.service";
-import { Field } from "src/app/field.model";
+import { BoardService } from "../../board.service";
+import { Field } from "src/app/models/field.model";
 
 @Component({
   selector: "app-board",

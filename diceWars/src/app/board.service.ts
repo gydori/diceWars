@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Field } from "./field.model";
+import { Field } from "./models/field.model";
 import { API_BASE_URL } from "../constants";
 
 @Injectable({
