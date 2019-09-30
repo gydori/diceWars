@@ -9,7 +9,7 @@ import { FieldComponent } from "./components/field/field.component";
 import { BoardService } from "./board.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { RobotComponent } from "./components/robot/robot.component";
-import { HttpConfigInterceptor } from "./components/robot/httpconfig.interceptor";
+import { HttpConfigInterceptor } from "./httpconfig.interceptor";
 import { TitleComponent } from "./components/title/title.component";
 import { WinComponent } from "./components/win/win.component";
 import { LostComponent } from "./components/lost/lost.component";

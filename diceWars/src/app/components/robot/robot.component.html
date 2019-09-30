@@ -1,23 +1,29 @@
-<table>
-  <tr *ngFor="let row of board">
-    <td *ngFor="let f of row">
-      <button
-        [ngClass]="{
-          purple: f.owner == true,
-          invader: invader != undefined && f.id == invader.id,
-          invaded: invaded != undefined && f.id == invaded.id
-        }"
-        (click)="attack(f)"
-        [disabled]="attackable(f)"
-      >
-        <app-field [field]="f"></app-field>
-      </button>
-    </td>
-  </tr>
-</table>
+<div class="grid-container">
+  <app-title></app-title>
 
-<p>Your points: {{ invaderPoints }}</p>
-<p>Enemy points: {{ enemyPoints }}</p>
+  <div class="border-img">
+    <table>
+      <tr *ngFor="let row of board">
+        <td *ngFor="let f of row">
+          <button
+            [ngClass]="{
+              purple: f.owner == true,
+              invader: invader != undefined && f.id == invader.id,
+              invaded: invaded != undefined && f.id == invaded.id
+            }"
+            (click)="attack(f)"
+            [disabled]="attackable(f)"
+          >
+            <app-field [field]="f"></app-field>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-<button class="end-turn" (click)="endTurn()">End turn</button>
-<button class="end-turn" (click)="resume()">resume</button>
+  <p>Your points: {{ invaderPoints }}</p>
+  <p>Enemy points: {{ enemyPoints }}</p>
+
+  <button class="end-turn" (click)="endTurn()">End turn</button>
+  <button class="end-turn" (click)="resume()">resume</button>
+</div>

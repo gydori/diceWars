@@ -41,3 +41,17 @@ button:disabled {
   height: auto;
   font-size: 16px;
 }
+
+.grid-container {
+  display: grid;
+  justify-items: center;
+  background: url("../../../assets/screenshot2.png");
+  background-size: cover;
+}
+
+.border-img {
+  border-image-slice: 0 1 0 0 fill;
+  border-image-width: 10px 10px 10px 10px;
+  border-image-outset: 40px 50px 40px 50px;
+  border-image-source: url("https://i.pinimg.com/originals/43/49/cf/4349cf95b77c3fd6fea41f66fad3058c.png");
+}
