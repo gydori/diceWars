@@ -19,7 +19,10 @@
       <p>Your points: {{ invaderPoints }}</p>
       <p>Enemy points: {{ enemyPoints }}</p>
 
-      <button class="end-turn" (click)="endTurn()">End turn</button>
+      <button class="end-turn" (click)="endTurn()" [disabled]="isYourTurn()">
+        End turn
+      </button>
+      <a target="_blank" routerLink="/websocket/false"><button>join</button></a>
     </div>
   </div>
 </div>

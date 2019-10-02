@@ -21,7 +21,8 @@ const myRoutes: Routes = [
   { path: "gameRobot", component: RobotComponent },
   { path: "win", component: WinComponent },
   { path: "lost", component: LostComponent },
-  { path: "websocket", component: WebsocketComponent }
+  { path: "websocket/true", component: WebsocketComponent },
+  { path: "websocket/false", component: WebsocketComponent }
 ];
 
 @NgModule({

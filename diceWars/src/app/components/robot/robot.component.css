@@ -51,7 +51,7 @@ button:disabled {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background: url("../../../assets/screenshot2.png");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
 }
@@ -64,8 +64,8 @@ button:disabled {
   margin: 100px 100px 50px 100px;
   border-image-slice: 36 21 39 34 fill;
   border-image-width: 10px 10px 10px 10px;
-  border-image-outset: 50px 50px 50px 50px;
-  border-image-source: url("https://cdn.imgbin.com/4/14/10/imgbin-cool-boarders-2-light-border-trim-material-rectangular-gold-frame-illustration-h5ay9qhU53QFUGWruDCaxCySB.jpg");
+  border-image-outset: 70px 60px 50px 50px;
+  border-image-source: url("../../../assets/imgbin_03.png");
 }
 
 .two-col {
@@ -89,7 +89,7 @@ button:disabled {
 .end-turn {
   cursor: pointer;
   position: relative;
-  padding: 1.3rem;
+  padding: 1.2rem;
   border-radius: 3.75rem;
   border: 1px solid rgb(255, 94, 0);
   background-image: linear-gradient(-180deg, #ffbe33 0%, #ff7500 100%);
