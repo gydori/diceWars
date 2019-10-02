@@ -36,7 +36,7 @@ public class GameResource {
 
 
     @PostMapping("/endturn")
-    public void endGame(@RequestBody String who) {
+    public void endTurn(@RequestBody String who) {
         boardService.clearDB();
         if (who.equals("true")) {
             gameService.endOfTurn(true);

@@ -13,13 +13,15 @@ import { HttpConfigInterceptor } from "./httpconfig.interceptor";
 import { TitleComponent } from "./components/title/title.component";
 import { WinComponent } from "./components/win/win.component";
 import { LostComponent } from "./components/lost/lost.component";
+import { WebsocketComponent } from "./websocket/websocket.component";
 
 const myRoutes: Routes = [
   { path: "", component: StartPageComponent },
   { path: "game", component: BoardComponent },
   { path: "gameRobot", component: RobotComponent },
   { path: "win", component: WinComponent },
-  { path: "lost", component: LostComponent }
+  { path: "lost", component: LostComponent },
+  { path: "websocket", component: WebsocketComponent }
 ];
 
 @NgModule({
@@ -31,7 +33,8 @@ const myRoutes: Routes = [
     RobotComponent,
     TitleComponent,
     WinComponent,
-    LostComponent
+    LostComponent,
+    WebsocketComponent
   ],
   imports: [BrowserModule, RouterModule.forRoot(myRoutes), HttpClientModule],
   providers: [
