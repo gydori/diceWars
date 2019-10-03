@@ -100,24 +100,31 @@ export class RobotComponent implements OnInit {
     setTimeout(() => {
       let thisCount = count;
       if (data2.length != 0) {
+        this.invader = this.board[data2[thisCount].invader.row][
+          data2[thisCount].invader.col
+        ];
+        this.invaded = this.board[data2[thisCount].invaded.row][
+          data2[thisCount].invaded.col
+        ];
         this.invaderPoints = data2[thisCount].invaderPoints;
         this.enemyPoints = data2[thisCount].invadedPoints;
-        this.convertBoard(data2[thisCount].board);
-        this.invader = data2[thisCount].invader;
-        this.invaded = data2[thisCount].invaded;
-        thisCount++;
-      }
-      if (thisCount < data2.length) {
-        this.myLoop(data2, thisCount);
-      }
-      if (thisCount == data2.length) {
-        this.boardService.endTurn(this.whosTurn).subscribe(() => {
-          this.whosTurn = !this.whosTurn;
-          this.getBoard();
-          this.war = [];
-          this.invader = undefined;
-          this.invaded = undefined;
-        });
+        setTimeout(() => {
+          this.convertBoard(data2[thisCount].board);
+          thisCount++;
+
+          if (thisCount < data2.length) {
+            this.myLoop(data2, thisCount);
+          }
+          if (thisCount == data2.length) {
+            this.boardService.endTurn(this.whosTurn).subscribe(() => {
+              this.whosTurn = !this.whosTurn;
+              this.getBoard();
+              this.war = [];
+              this.invader = undefined;
+              this.invaded = undefined;
+            });
+          }
+        }, 800);
       }
     }, 1000);
   }

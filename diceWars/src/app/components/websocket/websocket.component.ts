@@ -12,14 +12,10 @@ import { Error } from "../../models/error.model";
   styleUrls: ["./websocket.component.css"]
 })
 export class WebsocketComponent {
-  private serverUrl = "http://localhost:8081/socket";
+  private serverUrl = "http://192.168.5.172:8081/socket";
   private stompClient;
 
-  constructor(
-    private boardService: BoardService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     this.initializeWebSocketConnection();
   }
 
@@ -33,12 +29,6 @@ export class WebsocketComponent {
   url = this.activatedRoute.snapshot.url[1].path;
 
   ngOnInit() {
-    /*this.boardService.initBoard().subscribe((data: []) => {
-      this.convertBoard(data);
-      for (let i = 0; i < Math.sqrt(data.length); i++) {
-        this.size[i] = i;
-      }
-    });*/
     setTimeout(() => {
       this.sendMessage("initBoard", "initBoard");
     }, 500);
@@ -110,14 +100,6 @@ export class WebsocketComponent {
         setTimeout(() => {
           this.sendMessage("getBoard", "getBoard");
         }, 500);
-
-        /*this.boardService.attack(this.war).subscribe((data: number[]) => {
-          this.invaderPoints = data[0];
-          this.enemyPoints = data[1];
-          this.getBoard();
-          this.war = [];
-          this.invader = undefined;
-        });*/
         setTimeout(() => {
           this.war = [];
           this.invader = undefined;
@@ -167,34 +149,9 @@ export class WebsocketComponent {
   }
 
   endTurn() {
-    console.log(this.whosTurn);
     this.sendMessage("whosTurn", String(this.whosTurn));
-    //this.whosTurn = !this.whosTurn;
     setTimeout(() => {
       this.sendMessage("getBoard", "getBoard");
     }, 500);
-
-    /*this.boardService.endTurn(this.whosTurn).subscribe(() => {
-      this.whosTurn = !this.whosTurn;
-      this.getBoard();
-    });*/
-  }
-
-  getBoard() {
-    this.boardService.getBoard().subscribe((data: []) => {
-      this.convertBoard(data);
-    });
-  }
-
-  convertBoard(data: Field[]) {
-    this.board = [];
-    let k = 0;
-    for (let i: number = 0; i < Math.sqrt(data.length); i++) {
-      this.board[i] = [];
-      for (let j: number = 0; j < Math.sqrt(data.length); j++) {
-        this.board[i][j] = data[k];
-        k++;
-      }
-    }
   }
 }

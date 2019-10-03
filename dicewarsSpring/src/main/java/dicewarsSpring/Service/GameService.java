@@ -2,9 +2,7 @@ package dicewarsSpring.Service;
 
 import dicewarsSpring.Model.Field;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Random;
@@ -42,12 +40,7 @@ public class GameService {
             me.setDiceNumber(1);
         }
         dbService.saveBoard();
-        if (boardService.winCheck()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You win");
-        }
-        if (boardService.looseCheck()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You lost");
-        }
+
         return points;
     }
 

@@ -3,7 +3,9 @@ package dicewarsSpring.Service;
 import dicewarsSpring.Model.Board;
 import dicewarsSpring.Model.Field;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -96,17 +98,23 @@ public class BoardService {
 
     //pálya jelenlegi állásának visszaadása
     public Field[] getBoard() {
-/*        List<Field> listBoard = dbService.findAllField();
+        List<Field> listBoard = dbService.findAllField();
         Field[] convertedBoard = new Field[listBoard.size()];
-        convertedBoard = listBoard.toArray(convertedBoard);*/
-        Field[] convertedBoard = new Field[(int) Math.pow(board.getSize(), 2)];
+        convertedBoard = listBoard.toArray(convertedBoard);
+        if (winCheck()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You win");
+        }
+        if (looseCheck()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You lost");
+        }
+        /*Field[] convertedBoard = new Field[(int) Math.pow(board.getSize(), 2)];
         int pointer = 0;
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
                 convertedBoard[pointer] = board.getBoard()[i][j];
                 pointer++;
             }
-        }
+        }*/
         return convertedBoard;
     }
 
@@ -126,24 +134,6 @@ public class BoardService {
         } else {
             return false;
         }
-    }
-
-    public Field[] convertResumeBoard() {
-        //listből arraybe, hogy küldhető legyen a frontendhez
-        List<Field> listBoard = dbService.findAllField();
-        Field[] arrayBoard = new Field[listBoard.size()];
-        arrayBoard = listBoard.toArray(arrayBoard);
-
-        //backendbeli board-ba beletölteni
-        int size = (int) Math.sqrt(arrayBoard.length);
-        int k = 0;
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                board.getBoard()[i][j] = arrayBoard[k];
-                k++;
-            }
-        }
-        return arrayBoard;
     }
 
 }

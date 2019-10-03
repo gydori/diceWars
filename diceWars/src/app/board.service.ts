@@ -28,8 +28,4 @@ export class BoardService {
   robotAttack() {
     return this.httpClient.get(`${API_BASE_URL}/robot`);
   }
-
-  resume() {
-    return this.httpClient.get(`${API_BASE_URL}/resume`);
-  }
 }
