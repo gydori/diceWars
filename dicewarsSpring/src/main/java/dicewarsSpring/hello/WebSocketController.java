@@ -3,6 +3,7 @@ package dicewarsSpring.hello;
 import com.google.gson.Gson;
 import dicewarsSpring.Model.Board;
 import dicewarsSpring.Model.Field;
+import dicewarsSpring.Model.SocketMessage;
 import dicewarsSpring.Service.BoardService;
 import dicewarsSpring.Service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,77 +34,40 @@ public class WebSocketController {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
         MultiValueMap<String, String> multiValueMap = headers.get(StompHeaderAccessor.NATIVE_HEADERS, MultiValueMap.class);
         String header = multiValueMap.get("header").get(0);
+        Gson gson = new Gson();
         if (header.equals("war")) {
-            Gson gson = new Gson();
             Field[] war = gson.fromJson(messageS, Field[].class);
-            try {
-                int[] points = gameService.attack(board.getBoard()[war[0].getRow()][war[0].getCol()], board.getBoard()[war[1].getRow()][war[1].getCol()]);
-                String json = new Gson().toJson(points);
-                return json;
-            } catch (ResponseStatusException e) {
-                return new Gson().toJson(e);
-            }
+            int[] points = gameService.attack(board.getBoard()[war[0].getRow()][war[0].getCol()], board.getBoard()[war[1].getRow()][war[1].getCol()]);
+            SocketMessage sm = new SocketMessage("points", points);
+            return gson.toJson(sm);
         }
         if (header.equals("getBoard")) {
-            Field[] board = boardService.getBoard();
-            String json = new Gson().toJson(board);
-            return json;
+            try {
+                Field[] board = boardService.getBoard();
+                SocketMessage sm = new SocketMessage("getBoard", board);
+                return gson.toJson(sm);
+            } catch (ResponseStatusException e) {
+                SocketMessage sm = new SocketMessage("endGame", e);
+                return gson.toJson(sm);
+            }
         }
         if (header.equals("initBoard")) {
             Field[] board = boardService.initializeBoard();
-            String json = new Gson().toJson(board);
-            return json;
+            SocketMessage sm = new SocketMessage("initBoard", board);
+            return gson.toJson(sm);
         }
         if (header.equals("whosTurn")) {
             if (messageS.equals("true")) {
                 gameService.endOfTurn(true);
-                return "true";
+                SocketMessage sm = new SocketMessage("whosTurn", "true");
+                return gson.toJson(sm);
             } else {
                 gameService.endOfTurn(false);
-                return "false";
+                SocketMessage sm = new SocketMessage("whosTurn", "false");
+                return gson.toJson(sm);
             }
         }
-
-        //this.template.convertAndSend("/chat", new SimpleDateFormat("HH:mm:ss").format(new Date()) + "- " + message);
-        //MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-        /*if (message.startsWith("[")) {
-            Gson gson = new Gson();
-            Field[] war = gson.fromJson(message, Field[].class);
-            try {
-                int[] points = gameService.attack(board.getBoard()[war[0].getRow()][war[0].getCol()], board.getBoard()[war[1].getRow()][war[1].getCol()]);
-                String json = new Gson().toJson(points);
-                return json;
-            } catch (ResponseStatusException e) {
-                return new Gson().toJson(e);
-            }
-        }
-        if (message.equals("getBoard")) {
-            Field[] board = boardService.getBoard();
-            String json = new Gson().toJson(board);
-            return json;
-        }
-        if (message.equals("initBoard")) {
-            Field[] board = boardService.initializeBoard();
-            String json = new Gson().toJson(board);
-            return json;
-        }
-        if (message.equals("true")) {
-            gameService.endOfTurn(true);
-            return "true";
-        }
-        if (message.equals("false")) {
-            gameService.endOfTurn(false);
-            return "false";
-        }
-        return null;*/
 
         return null;
     }
-
-/*    @SendToUser("/chat/{user}")
-    @MessageMapping("/send/message/{user}")
-    public String processMessageFromClient(@DestinationVariable String user, String message) throws Exception {
-        System.out.println("itt vagyok");
-        return "itt vagyok, true!";
-    }*/
 }

@@ -5,6 +5,7 @@ import { BoardService } from "../../board.service";
 import { Field } from "src/app/models/field.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Error } from "../../models/error.model";
+import { socketMessage } from "src/app/models/socketMessage.model";
 
 @Component({
   selector: "app-root",
@@ -40,40 +41,40 @@ export class WebsocketComponent {
     let that = this;
     this.stompClient.connect({}, function(frame) {
       that.stompClient.subscribe("/chat", message => {
-        var messageP = JSON.parse(message.body);
-        console.log(messageP);
-        if (messageP.length == 2) {
-          that.invaderPoints = messageP[0];
-          that.enemyPoints = messageP[1];
-        } else {
-          if (messageP.length > 2) {
-            that.board = [];
-            let k = 0;
-            for (let i: number = 0; i < Math.sqrt(messageP.length); i++) {
-              that.board[i] = [];
-              for (let j: number = 0; j < Math.sqrt(messageP.length); j++) {
-                that.board[i][j] = messageP[k];
-                k++;
-              }
+        let messageP: socketMessage = JSON.parse(message.body);
+        if (messageP.title == "points") {
+          that.invaderPoints = messageP.body[0];
+          that.enemyPoints = messageP.body[1];
+        }
+        if (messageP.title == "initBoard" || messageP.title == "getBoard") {
+          that.board = [];
+          let k = 0;
+          for (let i: number = 0; i < Math.sqrt(messageP.body.length); i++) {
+            that.board[i] = [];
+            for (let j: number = 0; j < Math.sqrt(messageP.body.length); j++) {
+              that.board[i][j] = messageP.body[k];
+              k++;
+            }
+          }
+        }
+        if (messageP.title == "whosTurn") {
+          that.whosTurn = !JSON.parse(messageP.body);
+        }
+        if (messageP.title == "endGame") {
+          let err: Error = messageP.body;
+          console.log(err);
+          console.log(err.reason);
+          if (err.reason === "You win") {
+            if (that.url === "true") {
+              that.router.navigate(["win"]);
+            } else {
+              that.router.navigate(["lost"]);
             }
           } else {
-            if (messageP === true || messageP === false) {
-              that.whosTurn = !messageP;
+            if (that.url === "true") {
+              that.router.navigate(["lost"]);
             } else {
-              let err: Error = messageP;
-              if (err.reason === "You win") {
-                if (that.url === "true") {
-                  that.router.navigate(["win"]);
-                } else {
-                  that.router.navigate(["lost"]);
-                }
-              } else {
-                if (that.url === "true") {
-                  that.router.navigate(["lost"]);
-                } else {
-                  that.router.navigate(["win"]);
-                }
-              }
+              that.router.navigate(["win"]);
             }
           }
         }
