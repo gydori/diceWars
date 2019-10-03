@@ -23,8 +23,10 @@
         </table>
 
         <div class="two-col">
-          <p>Your points: {{ invaderPoints }}</p>
-          <p>Enemy points: {{ enemyPoints }}</p>
+          <p *ngIf="!isYourTurn()">Your points: {{ invaderPoints }}</p>
+          <p *ngIf="isYourTurn()">Your points: {{ enemyPoints }}</p>
+          <p *ngIf="!isYourTurn()">Enemy points: {{ enemyPoints }}</p>
+          <p *ngIf="isYourTurn()">Enemy points: {{ invaderPoints }}</p>
         </div>
       </div>
       <div class="button">

@@ -6,6 +6,7 @@ import { Field } from "src/app/models/field.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Error } from "../../models/error.model";
 import { socketMessage } from "src/app/models/socketMessage.model";
+import { Attack } from "src/app/models/attack.model";
 
 @Component({
   selector: "app-root",
@@ -13,7 +14,7 @@ import { socketMessage } from "src/app/models/socketMessage.model";
   styleUrls: ["./websocket.component.css"]
 })
 export class WebsocketComponent {
-  private serverUrl = "http://192.168.5.172:8081/socket";
+  private serverUrl = "http://localhost:8081/socket";
   private stompClient;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
@@ -42,9 +43,12 @@ export class WebsocketComponent {
     this.stompClient.connect({}, function(frame) {
       that.stompClient.subscribe("/chat", message => {
         let messageP: socketMessage = JSON.parse(message.body);
-        if (messageP.title == "points") {
-          that.invaderPoints = messageP.body[0];
-          that.enemyPoints = messageP.body[1];
+        if (messageP.title == "attack") {
+          let attack: Attack = messageP.body;
+          that.invaderPoints = attack.invaderPoints;
+          that.enemyPoints = attack.invadedPoints;
+          that.invader = attack.invader;
+          that.invaded = attack.invaded;
         }
         if (messageP.title == "initBoard" || messageP.title == "getBoard") {
           that.board = [];
@@ -62,8 +66,6 @@ export class WebsocketComponent {
         }
         if (messageP.title == "endGame") {
           let err: Error = messageP.body;
-          console.log(err);
-          console.log(err.reason);
           if (err.reason === "You win") {
             if (that.url === "true") {
               that.router.navigate(["win"]);
@@ -77,6 +79,11 @@ export class WebsocketComponent {
               that.router.navigate(["win"]);
             }
           }
+        }
+        if (messageP.title == "emptyWar") {
+          that.war = [];
+          that.invader = undefined;
+          that.invaded = undefined;
         }
       });
     });
@@ -100,18 +107,16 @@ export class WebsocketComponent {
         this.sendMessage("war", JSON.stringify(this.war));
         setTimeout(() => {
           this.sendMessage("getBoard", "getBoard");
-        }, 500);
-        setTimeout(() => {
-          this.war = [];
-          this.invader = undefined;
-          this.invaded = undefined;
+          setTimeout(() => {
+            this.sendMessage("emptyWar", "emptyWar");
+          }, 500);
         }, 500);
       }
     }
   }
 
   attackable(f: Field) {
-    if (String(this.whosTurn) != this.activatedRoute.snapshot.url[1].path) {
+    if (String(this.whosTurn) != this.url) {
       return true;
     } else {
       if (this.invader == undefined && this.whosTurn == f.owner) {

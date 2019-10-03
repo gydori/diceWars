@@ -1,6 +1,7 @@
 package dicewarsSpring.hello;
 
 import com.google.gson.Gson;
+import dicewarsSpring.Model.Attack;
 import dicewarsSpring.Model.Board;
 import dicewarsSpring.Model.Field;
 import dicewarsSpring.Model.SocketMessage;
@@ -37,8 +38,15 @@ public class WebSocketController {
         Gson gson = new Gson();
         if (header.equals("war")) {
             Field[] war = gson.fromJson(messageS, Field[].class);
+            Attack attack = new Attack(war[0], war[1]);
             int[] points = gameService.attack(board.getBoard()[war[0].getRow()][war[0].getCol()], board.getBoard()[war[1].getRow()][war[1].getCol()]);
-            SocketMessage sm = new SocketMessage("points", points);
+            attack.setInvaderPoints(points[0]);
+            attack.setInvadedPoints(points[1]);
+            SocketMessage sm = new SocketMessage("attack", attack);
+            return gson.toJson(sm);
+        }
+        if (header.equals("emptyWar")) {
+            SocketMessage sm = new SocketMessage("emptyWar", "emptyWar");
             return gson.toJson(sm);
         }
         if (header.equals("getBoard")) {

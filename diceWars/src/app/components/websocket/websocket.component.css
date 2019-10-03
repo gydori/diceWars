@@ -31,7 +31,7 @@ td {
 .invader {
   border: 3px solid red;
   background-color: black;
-  color: white;
+  color: white !important;
 }
 
 .invaded {
@@ -64,10 +64,10 @@ button:disabled {
 
 .border-img {
   margin: 100px 100px 50px 100px;
-  border-image-slice: 36 21 39 34 fill;
-  border-image-width: 10px 10px 10px 10px;
-  border-image-outset: 70px 60px 50px 50px;
-  border-image-source: url("../../../assets/imgbin_03.png");
+  border-image-slice: 36 36 36 36 fill;
+  border-image-width: 20px 20px 20px 20px;
+  border-image-outset: 50px 50px 50px 50px;
+  border-image-source: url("../../../assets/keret_02.png");
 }
 
 .two-col {
