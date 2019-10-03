@@ -21,7 +21,6 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status == 401) {
-          alert(error.error.message);
           if (error.error.message == "You win") {
             this.router.navigate(["win"]);
           } else {

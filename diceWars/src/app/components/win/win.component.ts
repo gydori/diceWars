@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-win',
-  templateUrl: './win.component.html',
-  styleUrls: ['./win.component.css']
+  selector: "app-win",
+  templateUrl: "./win.component.html",
+  styleUrls: ["./win.component.css"]
 })
 export class WinComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

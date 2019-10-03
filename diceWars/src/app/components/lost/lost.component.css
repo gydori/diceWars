@@ -1,0 +1,110 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.grid-container {
+  display: grid;
+  width: 98vw;
+  height: 97vh;
+  grid-template-rows: 1fr 1fr 1fr;
+  background: url("../../../assets/logo4.png"), url("../../../assets/logo4.png");
+  background-position: right 0px bottom, left 0px bottom 0px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 35%, 35%;
+}
+
+.title {
+  height: 25vh;
+  margin: auto;
+}
+
+.subtitle {
+  height: 25vh;
+  margin: auto;
+  font-size: 3rem;
+  font-weight: bolder;
+  font-family: "Dancing Script", cursive;
+}
+
+.main {
+  height: 47vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 3fr 2fr 3fr;
+  grid-row-gap: 10%;
+}
+
+.grid-item-1 {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}
+
+.grid-item-2 {
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
+
+button {
+  cursor: pointer;
+  position: relative;
+  padding: 1rem;
+  border-radius: 3.75rem;
+  border: 1px solid rgb(255, 94, 0);
+  background-image: linear-gradient(-180deg, #ffbe33 0%, #ff7500 100%);
+  box-shadow: 0 1rem 1.25rem 0 rgba(255, 102, 0, 0.877),
+    0 -0.25rem 1.5rem rgba(254, 140, 0, 1) inset,
+    0 0.75rem 0.5rem rgba(255, 185, 92, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgba(255, 163, 41, 1) inset;
+}
+
+button::before {
+  content: "";
+  display: block;
+  height: 0.25rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 7.5rem);
+  background: #fff;
+  border-radius: 100%;
+
+  opacity: 0.7;
+  background-image: linear-gradient(
+    -270deg,
+    rgba(255, 255, 255, 0) 0%,
+    #ffffff 20%,
+    #ffffff 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+button::after {
+  content: "";
+  display: block;
+  height: 0.25rem;
+  position: absolute;
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 7.5rem);
+  background: #fff;
+  border-radius: 100%;
+
+  filter: blur(1px);
+  opacity: 0.05;
+  background-image: linear-gradient(
+    -270deg,
+    rgba(255, 255, 255, 0) 0%,
+    #ffffff 20%,
+    #ffffff 80%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+button span {
+  color: white;
+  font-size: 3em;
+  font-weight: bolder;
+}

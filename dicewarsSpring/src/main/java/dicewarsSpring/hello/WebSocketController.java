@@ -8,13 +8,11 @@ import dicewarsSpring.Service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class WebSocketController {
-    private final SimpMessagingTemplate template;
     @Autowired
     public GameService gameService;
 
@@ -24,15 +22,11 @@ public class WebSocketController {
     @Autowired
     public Board board;
 
-    @Autowired
-    WebSocketController(SimpMessagingTemplate template) {
-        this.template = template;
-    }
-
     @SendTo("/chat")
     @MessageMapping("/send/message")
-    public String onReceivedMesage(String message) {
+    public String onReceivedMessage(String message) {
         //this.template.convertAndSend("/chat", new SimpleDateFormat("HH:mm:ss").format(new Date()) + "- " + message);
+        //MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
         if (message.startsWith("[")) {
             Gson gson = new Gson();
             Field[] war = gson.fromJson(message, Field[].class);

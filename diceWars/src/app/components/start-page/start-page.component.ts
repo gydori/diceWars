@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-start-page',
-  templateUrl: './start-page.component.html',
-  styleUrls: ['./start-page.component.css']
+  selector: "app-start-page",
+  templateUrl: "./start-page.component.html",
+  styleUrls: ["./start-page.component.css"]
 })
 export class StartPageComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
+  public isClicked = false;
 }

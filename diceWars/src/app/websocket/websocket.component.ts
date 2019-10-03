@@ -3,7 +3,8 @@ import * as Stomp from "stompjs";
 import * as SockJS from "sockjs-client";
 import { BoardService } from "../board.service";
 import { Field } from "src/app/models/field.model";
-import { Router, ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Error } from "../error.model";
 
 @Component({
   selector: "app-root",
@@ -16,8 +17,8 @@ export class WebsocketComponent {
 
   constructor(
     private boardService: BoardService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.initializeWebSocketConnection();
   }
@@ -38,7 +39,7 @@ export class WebsocketComponent {
       }
     });*/
     setTimeout(() => {
-      this.sendMessage("initBoard");
+      this.sendMessage("initBoard", "initBoard");
     }, 500);
   }
 
@@ -53,27 +54,44 @@ export class WebsocketComponent {
         if (messageP.length == 2) {
           that.invaderPoints = messageP[0];
           that.enemyPoints = messageP[1];
-        }
-        if (messageP.length > 2) {
-          that.board = [];
-          let k = 0;
-          for (let i: number = 0; i < Math.sqrt(messageP.length); i++) {
-            that.board[i] = [];
-            for (let j: number = 0; j < Math.sqrt(messageP.length); j++) {
-              that.board[i][j] = messageP[k];
-              k++;
+        } else {
+          if (messageP.length > 2) {
+            that.board = [];
+            let k = 0;
+            for (let i: number = 0; i < Math.sqrt(messageP.length); i++) {
+              that.board[i] = [];
+              for (let j: number = 0; j < Math.sqrt(messageP.length); j++) {
+                that.board[i][j] = messageP[k];
+                k++;
+              }
+            }
+          } else {
+            if (messageP === true || messageP === false) {
+              that.whosTurn = !messageP;
+            } else {
+              let err: Error = messageP;
+              if (err.reason === "You win") {
+                if (that.url === "true") {
+                  that.router.navigate(["win"]);
+                } else {
+                  that.router.navigate(["lost"]);
+                }
+              } else {
+                if (that.url === "true") {
+                  that.router.navigate(["lost"]);
+                } else {
+                  that.router.navigate(["win"]);
+                }
+              }
             }
           }
-        }
-        if (messageP === true || messageP === false) {
-          that.whosTurn = !messageP;
         }
       });
     });
   }
 
-  sendMessage(message) {
-    this.stompClient.send("/app/send/message", {}, message);
+  sendMessage(header, message) {
+    this.stompClient.send("/app/send/message", { header }, message);
   }
 
   attack(f: Field) {
@@ -87,9 +105,9 @@ export class WebsocketComponent {
       } else {
         this.war.push(f);
         console.log(this.war);
-        this.sendMessage(JSON.stringify(this.war));
+        this.sendMessage("war", JSON.stringify(this.war));
         setTimeout(() => {
-          this.sendMessage("getBoard");
+          this.sendMessage("getBoard", "getBoard");
         }, 500);
 
         /*this.boardService.attack(this.war).subscribe((data: number[]) => {
@@ -146,10 +164,10 @@ export class WebsocketComponent {
 
   endTurn() {
     console.log(this.whosTurn);
-    this.sendMessage(String(this.whosTurn));
+    this.sendMessage("whosTurn", String(this.whosTurn));
     //this.whosTurn = !this.whosTurn;
     setTimeout(() => {
-      this.sendMessage("getBoard");
+      this.sendMessage("getBoard", "getBoard");
     }, 500);
 
     /*this.boardService.endTurn(this.whosTurn).subscribe(() => {

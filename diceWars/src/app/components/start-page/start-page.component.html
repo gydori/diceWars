@@ -4,8 +4,16 @@
     <button class="grid-item-1" routerLink="gameRobot">
       <span>1 player</span>
     </button>
-    <button class="grid-item-2" routerLink="game">
+    <button class="grid-item-2" (click)="isClicked = !isClicked">
       <span>2 player</span>
     </button>
+    <div class="grid-item-3" *ngIf="isClicked">
+      <button routerLink="websocket/true">
+        <span>New Game</span>
+      </button>
+      <button routerLink="websocket/false">
+        <span>Join Game</span>
+      </button>
+    </div>
   </div>
 </div>

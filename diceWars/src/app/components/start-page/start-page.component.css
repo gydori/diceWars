@@ -16,12 +16,12 @@
 }
 
 .title {
-  height: 20vh;
+  height: 15vh;
   margin: auto;
 }
 
 .main {
-  height: 77vh;
+  height: 82vh;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-columns: 3fr 2fr 3fr;
@@ -36,6 +36,20 @@
 .grid-item-2 {
   grid-row-start: 3;
   grid-column-start: 2;
+}
+
+.grid-item-3 {
+  grid-row-start: 4;
+  grid-column-start: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 10%;
+}
+
+.grid-item-3 button span {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 button {
