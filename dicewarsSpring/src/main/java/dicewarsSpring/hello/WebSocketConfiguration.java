@@ -22,4 +22,5 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
                 .enableSimpleBroker("/chat");
     }
 
+
 }
