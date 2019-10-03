@@ -3,7 +3,6 @@ package dicewarsSpring.Resource;
 import dicewarsSpring.Model.Attack;
 import dicewarsSpring.Model.Board;
 import dicewarsSpring.Model.Field;
-import dicewarsSpring.Service.BoardService;
 import dicewarsSpring.Service.GameService;
 import dicewarsSpring.Service.RobotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,6 @@ public class GameResource {
     public GameService gameService;
 
     @Autowired
-    public BoardService boardService;
-
-    @Autowired
     public RobotService robotService;
 
     @Autowired
@@ -37,13 +33,11 @@ public class GameResource {
 
     @PostMapping("/endturn")
     public void endTurn(@RequestBody String who) {
-        boardService.clearDB();
         if (who.equals("true")) {
             gameService.endOfTurn(true);
         } else {
             gameService.endOfTurn(false);
         }
-        boardService.saveBoard();
     }
 
     @GetMapping("/robot")

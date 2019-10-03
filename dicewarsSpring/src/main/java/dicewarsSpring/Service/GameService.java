@@ -16,6 +16,9 @@ public class GameService {
     @Autowired
     public BoardService boardService;
 
+    @Autowired
+    DBService dbService;
+
     public int diceThrowing(Field field) {
         int sum = 0;
         for (int i = 0; i < field.getDiceNumber(); i++) {
@@ -25,6 +28,7 @@ public class GameService {
     }
 
     public int[] attack(Field me, Field enemy) {
+        dbService.clearDB();
         int myPoints = diceThrowing(me);
         int enemyPoints = diceThrowing(enemy);
         int[] points = {myPoints, enemyPoints};
@@ -37,6 +41,7 @@ public class GameService {
         if (myPoints <= enemyPoints) {
             me.setDiceNumber(1);
         }
+        dbService.saveBoard();
         if (boardService.winCheck()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You win");
         }
@@ -47,6 +52,7 @@ public class GameService {
     }
 
     public void endOfTurn(Boolean owner) {
+        dbService.clearDB();
         List<Field> myFields = boardService.getOwnFields(owner);
 
         int numberOfDices = myFields.size() / 2;
@@ -61,6 +67,7 @@ public class GameService {
                 numberOfDices--;
             }
         }
+        dbService.saveBoard();
     }
 
 }

@@ -2,7 +2,6 @@ package dicewarsSpring.Service;
 
 import dicewarsSpring.Model.Board;
 import dicewarsSpring.Model.Field;
-import dicewarsSpring.Repository.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,13 @@ public class BoardService {
     public Board board;
 
     @Autowired
-    FieldRepository fieldRepo;
+    DBService dbService;
+
+    //méret kisorsolása
+    public void getSize() {
+        int size = new Random().nextInt(6) + 5;
+        board.setSize(size);
+    }
 
     //mezők kisorsolása
     public void partiateFields() {
@@ -71,6 +76,9 @@ public class BoardService {
 
     //tábla inicializálása
     public Field[] initializeBoard() {
+        dbService.clearDB();
+        getSize();
+        board.setBoard(new Field[board.getSize()][board.getSize()]);
         int id = 0;
         for (int i = 0; i < board.getSize(); i++) {
             for (int j = 0; j < board.getSize(); j++) {
@@ -81,12 +89,16 @@ public class BoardService {
         partiateFields(); //mezők kiosztása
         partiateDices(true); //lila mezőkre kockák kiosztása
         partiateDices(false);  //zöld mezőkre kockák kiosztása
+        dbService.saveBoard();
         Field[] convertedBoard = getBoard();
         return convertedBoard;
     }
 
     //pálya jelenlegi állásának visszaadása
     public Field[] getBoard() {
+/*        List<Field> listBoard = dbService.findAllField();
+        Field[] convertedBoard = new Field[listBoard.size()];
+        convertedBoard = listBoard.toArray(convertedBoard);*/
         Field[] convertedBoard = new Field[(int) Math.pow(board.getSize(), 2)];
         int pointer = 0;
         for (int i = 0; i < board.getSize(); i++) {
@@ -116,23 +128,9 @@ public class BoardService {
         }
     }
 
-    public void saveBoard() {
-        for (int i = 0; i < Math.pow(board.getSize(), 2); i++) {
-            fieldRepo.save(board.getField(i));
-        }
-    }
-
-    public void clearDB() {
-        fieldRepo.deleteAll();
-    }
-
-    public List<Field> findAllField() {
-        return fieldRepo.findAll();
-    }
-
     public Field[] convertResumeBoard() {
         //listből arraybe, hogy küldhető legyen a frontendhez
-        List<Field> listBoard = findAllField();
+        List<Field> listBoard = dbService.findAllField();
         Field[] arrayBoard = new Field[listBoard.size()];
         arrayBoard = listBoard.toArray(arrayBoard);
 

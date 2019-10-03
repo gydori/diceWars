@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class WebSocketController {
@@ -35,9 +36,13 @@ public class WebSocketController {
         if (message.startsWith("[")) {
             Gson gson = new Gson();
             Field[] war = gson.fromJson(message, Field[].class);
-            int[] points = gameService.attack(board.getBoard()[war[0].getRow()][war[0].getCol()], board.getBoard()[war[1].getRow()][war[1].getCol()]);
-            String json = new Gson().toJson(points);
-            return json;
+            try {
+                int[] points = gameService.attack(board.getBoard()[war[0].getRow()][war[0].getCol()], board.getBoard()[war[1].getRow()][war[1].getCol()]);
+                String json = new Gson().toJson(points);
+                return json;
+            } catch (ResponseStatusException e) {
+                return new Gson().toJson(e);
+            }
         }
         if (message.equals("getBoard")) {
             Field[] board = boardService.getBoard();
@@ -51,10 +56,19 @@ public class WebSocketController {
         }
         if (message.equals("true")) {
             gameService.endOfTurn(true);
+            return "true";
         }
         if (message.equals("false")) {
             gameService.endOfTurn(false);
+            return "false";
         }
         return null;
     }
+
+/*    @SendToUser("/chat/{user}")
+    @MessageMapping("/send/message/{user}")
+    public String processMessageFromClient(@DestinationVariable String user, String message) throws Exception {
+        System.out.println("itt vagyok");
+        return "itt vagyok, true!";
+    }*/
 }

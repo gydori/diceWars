@@ -2,8 +2,6 @@ package dicewarsSpring.Model;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.Random;
-
 @Repository
 public class Board {
 
@@ -11,8 +9,8 @@ public class Board {
     private Field[][] board;
 
     public Board() {
-        this.size = new Random().nextInt(10 - 5) + 5;
-        this.board = new Field[size][size];
+        //this.size = new Random().nextInt(10 - 5) + 5;
+        //this.board = new Field[size][size];
     }
 
     public Field getField(int id) {
@@ -38,4 +36,7 @@ public class Board {
         return board;
     }
 
+    public void setBoard(Field[][] board) {
+        this.board = board;
+    }
 }
