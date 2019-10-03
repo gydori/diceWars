@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="button">
-        <button class="end-turn" (click)="endTurn()" [disabled]="!whosTurn">
+        <button class="end-turn" (click)="endTurn()" [disabled]="isYourTurn()">
           <span>End turn</span>
         </button>
       </div>

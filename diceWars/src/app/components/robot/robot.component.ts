@@ -39,6 +39,7 @@ export class RobotComponent implements OnInit {
         this.war = [];
         this.invader = undefined;
       } else {
+        this.invaded = f;
         this.war.push(f);
         this.boardService.attack(this.war).subscribe((data: number[]) => {
           this.invaderPoints = data[0];
@@ -46,6 +47,7 @@ export class RobotComponent implements OnInit {
           this.getBoard();
           this.war = [];
           this.invader = undefined;
+          this.invaded = undefined;
         });
       }
     }
@@ -136,11 +138,5 @@ export class RobotComponent implements OnInit {
         k++;
       }
     }
-  }
-
-  resume() {
-    this.boardService.resume().subscribe((data: Field[]) => {
-      this.convertBoard(data);
-    });
   }
 }

@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
 import * as Stomp from "stompjs";
 import * as SockJS from "sockjs-client";
-import { BoardService } from "../board.service";
+import { BoardService } from "../../board.service";
 import { Field } from "src/app/models/field.model";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Error } from "../error.model";
+import { Error } from "../../models/error.model";
 
 @Component({
   selector: "app-root",
@@ -26,6 +26,7 @@ export class WebsocketComponent {
   board: Field[][];
   war: Field[] = [];
   invader: Field;
+  invaded: Field;
   whosTurn: boolean = true;
   invaderPoints: number;
   enemyPoints: number;
@@ -103,8 +104,8 @@ export class WebsocketComponent {
         this.war = [];
         this.invader = undefined;
       } else {
+        this.invaded = f;
         this.war.push(f);
-        console.log(this.war);
         this.sendMessage("war", JSON.stringify(this.war));
         setTimeout(() => {
           this.sendMessage("getBoard", "getBoard");
@@ -117,8 +118,11 @@ export class WebsocketComponent {
           this.war = [];
           this.invader = undefined;
         });*/
-        this.war = [];
-        this.invader = undefined;
+        setTimeout(() => {
+          this.war = [];
+          this.invader = undefined;
+          this.invaded = undefined;
+        }, 500);
       }
     }
   }

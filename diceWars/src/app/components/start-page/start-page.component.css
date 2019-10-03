@@ -115,3 +115,7 @@ button span {
   font-size: 3em;
   font-weight: bolder;
 }
+
+button:hover {
+  border: 2px solid rgb(255, 94, 0);
+}

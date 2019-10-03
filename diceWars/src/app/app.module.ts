@@ -13,7 +13,7 @@ import { HttpConfigInterceptor } from "./httpconfig.interceptor";
 import { TitleComponent } from "./components/title/title.component";
 import { WinComponent } from "./components/win/win.component";
 import { LostComponent } from "./components/lost/lost.component";
-import { WebsocketComponent } from "./websocket/websocket.component";
+import { WebsocketComponent } from "./components/websocket/websocket.component";
 
 const myRoutes: Routes = [
   { path: "", component: StartPageComponent },
