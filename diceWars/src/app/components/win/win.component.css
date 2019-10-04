@@ -19,14 +19,6 @@
   margin: auto;
 }
 
-.subtitle {
-  height: 25vh;
-  margin: auto;
-  font-size: 3rem;
-  font-weight: bolder;
-  font-family: "Dancing Script", cursive;
-}
-
 .main {
   height: 47vh;
   display: grid;
@@ -107,4 +99,34 @@ button span {
   color: white;
   font-size: 3em;
   font-weight: bolder;
+}
+
+@media only screen and (min-width: 600px) {
+  .subtitle {
+    height: 25vh;
+    margin: auto;
+    font-size: 3rem;
+    font-weight: bolder;
+    font-family: "Dancing Script", cursive;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 600px) {
+  .subtitle {
+    height: 25vh;
+    margin: auto;
+    font-size: 2rem;
+    font-weight: bolder;
+    font-family: "Dancing Script", cursive;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .subtitle {
+    height: 25vh;
+    margin: auto;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    font-family: "Dancing Script", cursive;
+  }
 }
