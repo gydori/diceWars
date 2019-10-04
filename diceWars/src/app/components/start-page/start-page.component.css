@@ -16,12 +16,12 @@
 }
 
 .title {
-  height: 15vh;
+  height: 20vh;
   margin: auto;
 }
 
 .main {
-  height: 82vh;
+  height: 77vh;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-columns: 3fr 2fr 3fr;
@@ -118,4 +118,9 @@ button span {
 
 button:hover {
   border: 2px solid rgb(255, 94, 0);
+}
+
+@media only screen and (min-width: 1000px) {
+}
+@media only screen and (max-width: 1000px) {
 }

@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import * as Stomp from "stompjs";
 import * as SockJS from "sockjs-client";
-import { BoardService } from "../../board.service";
 import { Field } from "src/app/models/field.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Error } from "../../models/error.model";
 import { socketMessage } from "src/app/models/socketMessage.model";
 import { Attack } from "src/app/models/attack.model";
+import { API_BASE_URL } from "../../../constants";
 
 @Component({
   selector: "app-root",
@@ -14,7 +14,7 @@ import { Attack } from "src/app/models/attack.model";
   styleUrls: ["./websocket.component.css"]
 })
 export class WebsocketComponent {
-  private serverUrl = "http://localhost:8081/socket";
+  private serverUrl = `${API_BASE_URL}/socket`;
   private stompClient;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
@@ -110,7 +110,7 @@ export class WebsocketComponent {
           setTimeout(() => {
             this.sendMessage("emptyWar", "emptyWar");
           }, 500);
-        }, 500);
+        }, 1000);
       }
     }
   }
